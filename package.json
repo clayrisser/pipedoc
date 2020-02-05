@@ -1,89 +1,21 @@
 {
   "name": "pipedoc",
-  "version": "0.0.1",
   "description": "documentation pipelines",
-  "keywords": [
-    "pipedoc",
-    "doc",
-    "documentation",
-    "pipedoc"
+  "version": "0.0.1",
+  "files": [
+    "packages"
   ],
-  "homepage": "https://github.com/codejamninja/pipedoc",
-  "bugs": {
-    "url": "https://github.com/codejamninja/pipedoc/issues",
-    "email": "jam@codejam.ninja"
+  "scripts": {
+    "bootstrap": "pnpm install",
+    "build": "npm run exec -- build",
+    "clean": "npm run exec -- clean",
+    "exec": "pnpm recursive --workspace-concurrency=Infinity run --filter={packages}",
+    "publish": "pnpm -r publish --filter={packages} --access=public",
+    "purge": "git clean -fXd",
+    "update": "pnpm -r update -L"
   },
   "license": "MIT",
-  "author": {
-    "name": "Jam Risser",
-    "email": "jam@codejam.ninja",
-    "url": "https://codejam.ninja"
-  },
-  "files": [
-    "bin",
-    "lib"
-  ],
-  "bin": {
-    "pipedoc": "bin/pipedoc.js"
-  },
-  "main": "lib/index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/codejamninja/pipedoc"
-  },
-  "scripts": {
-    "build": "make -s build",
-    "clean": "make -s clean",
-    "format": "make -s format",
-    "lint": "make -s lint",
-    "make": "make --version",
-    "prepare": "make -s prepare",
-    "purge": "make -s purge",
-    "start": "make -s start",
-    "test": "make -s test",
-    "test:watch": "make -s test-watch"
-  },
-  "dependencies": {
-    "@oclif/command": "^1.5.19",
-    "@oclif/config": "^1.13.3",
-    "@oclif/errors": "^1.2.2",
-    "@oclif/parser": "^3.8.4",
-    "core-js": "^3.6.4",
-    "globby": "^11.0.0"
-  },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.4",
-    "@babel/node": "^7.8.4",
-    "@babel/preset-env": "^7.8.4",
-    "@babel/preset-typescript": "^7.8.3",
-    "@types/jest": "^25.1.1",
-    "@types/node": "^13.7.0",
-    "@typescript-eslint/eslint-plugin": "^2.19.0",
-    "@typescript-eslint/parser": "^2.19.0",
-    "cspell": "^4.0.46",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-typescript": "^6.3.1",
-    "eslint-config-jam": "^0.2.20",
-    "gnumake": "^0.1.0",
-    "jest": "^25.1.0",
-    "typescript": "^3.7.5"
-  },
-  "engines": {
-    "node": ">=6.0.0"
-  },
-  "eslintIgnore": [
-    "lib"
-  ],
-  "oclif": {
-    "commands": "./lib/commands",
-    "bin": "reactant",
-    "hooks": {
-      "init": "./lib/hooks/init"
-    }
-  },
-  "jest": {
-    "testRegex": "tests(/|/.*/)[^_/]*[jt]sx?$",
-    "verbose": true
+    "pnpm": "^4.9.2"
   }
 }

@@ -1,0 +1,3 @@
+# @pipedoc/cli
+
+> pipedoc cli

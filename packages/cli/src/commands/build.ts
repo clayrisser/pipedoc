@@ -1,3 +1,4 @@
+import execa from 'execa';
 import { Command, flags } from '@oclif/command';
 import PipeDoc from '..';
 import defaultOptions from '../defaultOptions';
