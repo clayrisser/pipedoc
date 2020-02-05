@@ -1,4 +1,10 @@
-import PipeDoc from '.';
+import { handle } from '@oclif/errors';
+import { run } from '@oclif/command';
 
-const pipeDoc = new PipeDoc();
-console.log(pipeDoc);
+(async () => {
+  try {
+    await run();
+  } catch (err) {
+    handle(err);
+  }
+})();
