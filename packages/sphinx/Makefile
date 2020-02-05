@@ -69,10 +69,6 @@ test: .make/lint-cache
 test-watch:
 	@jest --watch
 
-.PHONY: start
-start:
-	@babel-node --extensions ".ts,.tsx" src/bin build
-
 .PHONY: clean
 clean:
 	-@jest --clearCache

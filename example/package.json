@@ -20,13 +20,6 @@
     "email": "jam@codejam.ninja",
     "url": "https://codejam.ninja"
   },
-  "files": [
-    "bin",
-    "lib"
-  ],
-  "bin": {
-    "pipedoc": "bin/pipedoc.js"
-  },
   "main": "lib/index.js",
   "repository": {
     "type": "git",

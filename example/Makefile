@@ -71,7 +71,7 @@ test-watch:
 
 .PHONY: start
 start:
-	@babel-node --extensions ".ts,.tsx" src/bin build
+	@pipedoc build
 
 .PHONY: clean
 clean:
