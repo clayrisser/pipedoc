@@ -31,7 +31,7 @@ prepare:
 build: .make/build
 .make/build: .make/test-cache $(shell git ls-files)
 	-@rm -rf lib || true
-	@babel src -d lib --extensions ".ts,.tsx" --source-maps inline
+	@babel src -d lib --extensions '.ts,.tsx' --source-maps inline
 	@tsc -d --emitDeclarationOnly
 	@mkdir -p .make && touch -m .make/build
 

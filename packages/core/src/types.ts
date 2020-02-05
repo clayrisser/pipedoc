@@ -8,7 +8,6 @@ export interface Paths {
 }
 
 export interface PipeConfig {
-  path: string;
   [key: string]: any;
 }
 
@@ -41,4 +40,5 @@ export interface Pipes {
 export interface Config {
   name?: string;
   pipeline: Pipe[];
+  rootPath: string;
 }
