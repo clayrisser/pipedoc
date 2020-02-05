@@ -1,6 +1,5 @@
-import PipeDoc from '@pipedoc/core';
+import PipeDoc, { defaultOptions } from '@pipedoc/core';
 import { Command, flags } from '@oclif/command';
-import defaultOptions from '../defaultOptions';
 
 export default class Build extends Command {
   static description = 'build docs';

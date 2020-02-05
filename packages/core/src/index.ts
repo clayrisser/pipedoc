@@ -10,4 +10,5 @@ export default class PipeDoc {
   }
 }
 
+export { defaultOptions };
 export * from './types';

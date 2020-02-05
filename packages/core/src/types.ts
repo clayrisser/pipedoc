@@ -18,6 +18,21 @@ export interface Pipe {
   pipe: string;
 }
 
+export interface Plugin {
+  config: PluginConfig;
+  moduleName: string;
+  name: string;
+  path: string;
+}
+
+export interface Plugins {
+  [key: string]: Plugin;
+}
+
+export interface PluginConfig {
+  [key: string]: any;
+}
+
 export interface Pipes {
   [key: string]: Pipe;
 }
