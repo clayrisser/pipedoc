@@ -1,7 +1,7 @@
 {
-  "name": "@pipedoc/cli",
+  "name": "@pipedoc/sphinx",
   "version": "0.0.1",
-  "description": "pipedoc cli",
+  "description": "pipedoc sphinx",
   "keywords": [
     "pipedoc",
     "doc",
@@ -50,7 +50,9 @@
     "@oclif/parser": "^3.8.4",
     "@pipedoc/core": "workspace:^0.0.1",
     "core-js": "^3.6.4",
-    "globby": "^11.0.0"
+    "execa": "^4.0.0",
+    "globby": "^11.0.0",
+    "pkg-dir": "^4.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -76,13 +78,14 @@
   "eslintIgnore": [
     "lib"
   ],
-  "oclif": {
+  "osphinxf": {
     "commands": "./lib/commands",
     "bin": "reactant",
     "hooks": {
       "init": "./lib/hooks/init"
     }
   },
+  "pipedoc": true,
   "jest": {
     "testRegex": "tests(/|/.*/)[^_/]*[jt]sx?$",
     "verbose": true

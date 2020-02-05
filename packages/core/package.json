@@ -1,7 +1,7 @@
 {
-  "name": "@pipedoc/cli",
+  "name": "@pipedoc/core",
   "version": "0.0.1",
-  "description": "pipedoc cli",
+  "description": "pipedoc core",
   "keywords": [
     "pipedoc",
     "doc",
@@ -20,12 +20,8 @@
     "url": "https://codejam.ninja"
   },
   "files": [
-    "bin",
     "lib"
   ],
-  "bin": {
-    "pipedoc": "bin/pipedoc.js"
-  },
   "main": "lib/index.js",
   "repository": {
     "type": "git",
@@ -39,21 +35,17 @@
     "make": "make --version",
     "prepare": "make -s prepare",
     "purge": "make -s purge",
-    "start": "make -s start",
     "test": "make -s test",
     "test:watch": "make -s test-watch"
   },
   "dependencies": {
-    "@oclif/command": "^1.5.19",
-    "@oclif/config": "^1.13.3",
-    "@oclif/errors": "^1.2.2",
-    "@oclif/parser": "^3.8.4",
-    "@pipedoc/core": "workspace:^0.0.1",
     "core-js": "^3.6.4",
-    "globby": "^11.0.0"
+    "execa": "^4.0.0",
+    "globby": "^11.0.0",
+    "pkg-dir": "^4.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
     "@babel/core": "^7.8.4",
     "@babel/node": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
@@ -76,13 +68,6 @@
   "eslintIgnore": [
     "lib"
   ],
-  "oclif": {
-    "commands": "./lib/commands",
-    "bin": "reactant",
-    "hooks": {
-      "init": "./lib/hooks/init"
-    }
-  },
   "jest": {
     "testRegex": "tests(/|/.*/)[^_/]*[jt]sx?$",
     "verbose": true

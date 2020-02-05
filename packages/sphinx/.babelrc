@@ -1,0 +1,14 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "corejs": true,
+        "targets": {
+          "node": "6"
+        }
+      }
+    ],
+    "@babel/preset-typescript"
+  ]
+}

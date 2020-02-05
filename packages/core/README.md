@@ -1,0 +1,3 @@
+# @pipedoc/core
+
+> pipedoc core

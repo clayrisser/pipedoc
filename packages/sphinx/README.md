@@ -1,0 +1,3 @@
+# @pipedoc/sphinx
+
+> pipedoc sphinx

@@ -1,6 +1,6 @@
 import defaultOptions from './defaultOptions';
 import { Options } from './types';
-import { spawn } from './helpers';
+// import { spawn } from './helpers';
 
 export default class PipeDoc {
   constructor(public options: Options = defaultOptions) {}
