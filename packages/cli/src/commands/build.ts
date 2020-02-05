@@ -1,4 +1,4 @@
-import PipeDoc, { defaultOptions } from '@pipedoc/core';
+import PipeDoc, { defaultOptions, loadConfig } from '@pipedoc/core';
 import { Command, flags } from '@oclif/command';
 
 export default class Build extends Command {
@@ -15,7 +15,8 @@ export default class Build extends Command {
 
   async run() {
     const { flags } = this.parse(Build);
-    const pipeDoc = new PipeDoc({
+    const config = loadConfig();
+    const pipeDoc = new PipeDoc(config, {
       ...defaultOptions,
       ...JSON.parse(flags.config || '{}'),
       debug: !!flags.debug

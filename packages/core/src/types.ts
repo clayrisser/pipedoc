@@ -12,11 +12,12 @@ export interface PipeConfig {
   [key: string]: any;
 }
 
-export interface Pipe {
-  config: PipeConfig;
-  from: string;
-  pipe: string;
-}
+export type Pipe =
+  | string
+  | {
+      config: PipeConfig;
+      name: string;
+    };
 
 export interface Plugin {
   config: PluginConfig;
@@ -37,7 +38,7 @@ export interface Pipes {
   [key: string]: Pipe;
 }
 
-export interface Pipeline {
-  name: string;
-  pipes: Pipes;
+export interface Config {
+  name?: string;
+  pipeline: Pipe[];
 }

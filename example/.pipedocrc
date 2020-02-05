@@ -1,19 +1,4 @@
-name: kewl
-
-pipes:
-  sphinx:
-    pipe: sphinx
-    from: html
-    config:
-      path: pipedoc/sphinx
-
-  pandoc:
-    pipe: pandoc
-    from: sphinx
-    config:
-      from: markdown
-      to: latex
-
-  kewl:
-    pipe: kewl
-    from: pandoc
+pipeline:
+  - ./docs
+  - sphinx
+  - ./dist/docs
