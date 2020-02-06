@@ -16,9 +16,9 @@ export default class PipeDoc {
 
   async run(): Promise<Doc | null> {
     if (
-      this.config.pipeline.length >= 2 &&
-      typeof this.config.pipeline[0] === 'string' &&
-      typeof this.config.pipeline[this.config.pipeline.length - 1] === 'string'
+      this.config.pipeline.length < 2 ||
+      typeof this.config.pipeline[0] !== 'string' ||
+      typeof this.config.pipeline[this.config.pipeline.length - 1] !== 'string'
     ) {
       return null;
     }
