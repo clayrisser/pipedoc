@@ -1,7 +1,9 @@
 import path from 'path';
+import pkgDir from 'pkg-dir';
 import { Plugin, Plugins, PluginConfig } from './types';
 
 let _plugins: Plugins;
+const rootPath = pkgDir.sync(process.cwd()) || process.cwd();
 
 export function requireDefault<T = any>(moduleName: string): T {
   // eslint-disable-next-line global-require,import/no-dynamic-require
@@ -57,7 +59,6 @@ export function getPlugins(rootPath: string): Plugins {
 
 export function getPlugin(
   pluginName: string,
-  rootPath: string,
   pluginConfig: PluginConfig = {}
 ): Plugin | null {
   const plugins = getPlugins(rootPath);

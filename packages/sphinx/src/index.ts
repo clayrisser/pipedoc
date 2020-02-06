@@ -1,5 +1,10 @@
-import { PipeConfig, Options } from '@pipedoc/core';
+import { Plugin } from '@pipedoc/core';
+import SphinxPipe from './sphinxPipe';
 
-export default function(_config: PipeConfig, _options: Options) {
-  console.log('running sphinx pipeline');
-}
+const plugin: Partial<Plugin> = {
+  config: {},
+  name: 'spinx',
+  pipe: SphinxPipe
+};
+
+export default plugin;

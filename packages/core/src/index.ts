@@ -1,12 +1,12 @@
 import path from 'path';
 import Doc from './doc';
+import Pipe from './pipe';
 import defaultConfig from './defaultConfig';
 import defaultOptions from './defaultOptions';
 import { Config, Options, PipelineItem } from './types';
 import { CopyPipe } from './pipes';
+import { getPlugin } from './plugin';
 import { mapSeries } from './helpers';
-// import { getPlugin } from './plugin';
-// import { spawn } from './helpers';
 
 export default class PipeDoc {
   constructor(
@@ -32,8 +32,15 @@ export default class PipeDoc {
     const to = this.config.pipeline.pop() as string;
     await mapSeries(
       this.config.pipeline,
-      async (_pipelineItem: PipelineItem) => {
-        return doc;
+      async (pipelineItem: PipelineItem) => {
+        const plugin = getPlugin(
+          typeof pipelineItem === 'string' ? pipelineItem : pipelineItem.name,
+          typeof pipelineItem === 'string' ? {} : pipelineItem.config
+        );
+        if (!plugin?.pipe) return doc;
+        const PluginPipe = plugin.pipe;
+        const pipe = new PluginPipe(plugin.config);
+        return pipe.pipe(doc);
       }
     );
     const copyPipe = new CopyPipe({ to });
@@ -41,7 +48,9 @@ export default class PipeDoc {
   }
 }
 
-export { defaultOptions };
+export { defaultConfig, defaultOptions, Doc, Pipe };
 export * from './config';
+export * from './doc';
+export * from './pipe';
 export * from './plugin';
 export * from './types';
