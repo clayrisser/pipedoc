@@ -21,6 +21,6 @@ export default class Build extends Command {
       ...JSON.parse(flags.config || '{}'),
       debug: !!flags.debug
     });
-    return pipeDoc.build();
+    return pipeDoc.run();
   }
 }

@@ -2,7 +2,7 @@ import path from 'path';
 import pkgDir from 'pkg-dir';
 import { cosmiconfigSync } from 'cosmiconfig';
 import defaultConfig from './defaultConfig';
-import { Config, Pipe } from './types';
+import { Config, PipelineItem } from './types';
 
 const rootPath = pkgDir.sync(process.cwd()) || process.cwd();
 let _config: Config;
@@ -28,10 +28,10 @@ export function loadConfig() {
   const config = {
     ...defaultConfig,
     ...getUserConfig()
-  };
+  } as Config;
   config.rootPath = path.resolve(rootPath, config.rootPath);
   config.pipeline = config.pipeline.map(
-    (pipe: Pipe, i: number): Pipe => {
+    (pipe: PipelineItem, i: number): PipelineItem => {
       if (i === 0 || i === config.pipeline.length - 1) {
         return path.resolve(
           config.rootPath,

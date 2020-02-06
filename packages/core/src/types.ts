@@ -1,3 +1,5 @@
+import Pipe from './pipe';
+
 export interface Options {
   debug: boolean;
   paths: Paths;
@@ -11,7 +13,7 @@ export interface PipeConfig {
   [key: string]: any;
 }
 
-export type Pipe =
+export type PipelineItem =
   | string
   | {
       config: PipeConfig;
@@ -23,6 +25,7 @@ export interface Plugin {
   moduleName: string;
   name: string;
   path: string;
+  pipe: Pipe;
 }
 
 export interface Plugins {
@@ -39,6 +42,7 @@ export interface Pipes {
 
 export interface Config {
   name?: string;
-  pipeline: Pipe[];
+  pipeline: PipelineItem[];
   rootPath: string;
+  type: string;
 }

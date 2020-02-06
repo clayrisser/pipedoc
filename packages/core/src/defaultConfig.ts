@@ -1,8 +1,8 @@
 import { Config } from './types';
 
-const config: Config = {
-  rootPath: '.',
-  pipeline: []
+const config: Partial<Config> = {
+  pipeline: [],
+  rootPath: '.'
 };
 
 export default config;
