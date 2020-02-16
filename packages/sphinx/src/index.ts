@@ -3,7 +3,7 @@ import SphinxPipe from './sphinxPipe';
 
 const plugin: Partial<Plugin> = {
   config: {},
-  name: 'spinx',
+  name: 'sphinx',
   pipe: SphinxPipe
 };
 

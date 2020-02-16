@@ -8,6 +8,8 @@ import { CopyPipe } from './pipes';
 import { getPlugin } from './plugin';
 import { mapSeries } from './helpers';
 
+const logger = console;
+
 export default class PipeDoc {
   constructor(
     public config: Config = defaultConfig as Config,
@@ -22,11 +24,9 @@ export default class PipeDoc {
     ) {
       return null;
     }
+    let previous = this.config.pipeline.shift() as string;
     const doc = new Doc(
-      path.resolve(
-        this.config.rootPath,
-        this.config.pipeline.shift() as string
-      ),
+      path.resolve(this.config.rootPath, previous),
       this.config.type
     );
     const to = this.config.pipeline.pop() as string;
@@ -40,10 +40,14 @@ export default class PipeDoc {
         if (!plugin?.pipe) return doc;
         const PluginPipe = plugin.pipe;
         const pipe = new PluginPipe(plugin.config);
-        return pipe.pipe(doc);
+        logger.info(`${previous} -> ${plugin?.name}`);
+        const result = await pipe.pipe(doc);
+        previous = plugin.name;
+        return result;
       }
     );
     const copyPipe = new CopyPipe({ to });
+    logger.info(`${previous} -> ${to}`);
     return copyPipe.pipe(doc);
   }
 }
