@@ -4,7 +4,8 @@ import { Options } from './types';
 const options: Options = {
   debug: false,
   paths: {
-    root: pkgDir.sync(process.cwd()) || process.cwd()
+    root: pkgDir.sync(process.cwd()) || process.cwd(),
+    tmp: 'node_modules/.tmp/pipedoc'
   }
 };
 

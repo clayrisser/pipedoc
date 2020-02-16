@@ -3,5 +3,7 @@ type: markdown
 pipeline:
   - ./docs
   - sphinx
-  - pandoc
+  - name: pandoc
+    config:
+      output: markdown
   - ./dist/docs

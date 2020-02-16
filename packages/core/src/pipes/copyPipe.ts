@@ -1,14 +1,15 @@
 import fs from 'fs-extra';
 import Doc from '../doc';
 import Pipe, { PipeConfig } from '../pipe';
+import defaultOptions from '../defaultOptions';
 
 export interface CopyPipeConfig extends PipeConfig {
   to: string;
 }
 
 export default class CopyPipe extends Pipe {
-  constructor(public config: CopyPipeConfig) {
-    super({});
+  constructor(public config: CopyPipeConfig, public options = defaultOptions) {
+    super({}, options);
   }
 
   async pipe(doc: Doc): Promise<Doc> {

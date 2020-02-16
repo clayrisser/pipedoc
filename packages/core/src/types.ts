@@ -7,6 +7,7 @@ export interface Options {
 
 export interface Paths {
   root: string;
+  tmp: string;
 }
 
 export type PipelineItem =
