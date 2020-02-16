@@ -44,9 +44,11 @@ export default class PipeDoc {
       return null;
     }
     await fs.mkdirs(this.options.paths.tmp);
-    let previous = this.config.pipeline.shift() as string;
+    let previousName = this.config.pipeline.shift() as string;
+    let parentPath = previousName;
+    const parent: Pipe | null = null;
     const doc = new Doc(
-      path.resolve(this.config.rootPath, previous),
+      path.resolve(this.config.rootPath, previousName),
       this.config.type
     );
     const to = this.config.pipeline.pop() as string;
@@ -59,23 +61,29 @@ export default class PipeDoc {
         );
         if (!plugin?.pipe) return doc;
         const PluginPipe = plugin.pipe;
-        const pipe = new PluginPipe(plugin.config, {
-          ...this.options,
-          paths: {
-            ...this.options.paths,
-            tmp: path.resolve(this.options.paths.tmp, plugin.name)
-          }
-        });
-        logger.info(`${previous} -> ${plugin?.name}`);
+        const pipe = new PluginPipe(
+          plugin.config,
+          {
+            ...this.options,
+            paths: {
+              ...this.options.paths,
+              tmp: path.resolve(this.options.paths.tmp, plugin.name)
+            }
+          },
+          parentPath,
+          parent
+        );
+        logger.info(`${previousName} -> ${plugin?.name}`);
         await fs.remove(path.resolve(this.options.paths.tmp, plugin.name));
         await fs.mkdirs(path.resolve(this.options.paths.tmp, plugin.name));
         const result = await pipe.pipe(doc);
-        previous = plugin.name;
+        previousName = plugin.name;
+        parentPath = this.options.paths.tmp;
         return result;
       }
     );
-    const copyPipe = new CopyPipe({ to }, this.options);
-    logger.info(`${previous} -> ${to}`);
+    const copyPipe = new CopyPipe({ to }, this.options, parentPath, parent);
+    logger.info(`${previousName} -> ${to}`);
     return copyPipe.pipe(doc);
   }
 }

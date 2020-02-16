@@ -1,17 +1,22 @@
 import { Doc, Options, Pipe } from '@pipedoc/core';
+import globby from 'globby';
 
 export interface PandocPipeConfig {}
 
 export default class PandocPipe extends Pipe {
-  constructor(public config: PandocPipeConfig = {}, options: Options) {
-    super({}, options);
+  constructor(
+    public config: PandocPipeConfig = {},
+    options: Options,
+    parentPath: string,
+    parent: Pipe | null
+  ) {
+    super({}, options, parentPath, parent);
   }
 
   async pipe(doc: Doc): Promise<Doc> {
-    console.log('plugin', 'pandoc');
-    console.log('doc', doc);
-    console.log('config', this.config);
-    console.log('options', this.options);
+    console.log(this.parentPath);
+    const files = await globby(`${this.parentPath}/${doc.glob}`);
+    console.log('files', files);
     return doc;
   }
 }
