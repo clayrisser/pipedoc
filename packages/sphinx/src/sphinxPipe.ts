@@ -8,7 +8,6 @@ export default class SphinxPipe extends Pipe {
   }
 
   async pipe(doc: Doc): Promise<Doc> {
-    console.log('sphinx pipe -> ', doc);
     return doc;
   }
 }

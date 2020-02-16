@@ -1,0 +1,3 @@
+# @pipedoc/pandoc
+
+> pipedoc pandoc

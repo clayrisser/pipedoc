@@ -1,8 +1,7 @@
 {
-  "name": "@pipedoc/example",
-  "private": true,
+  "name": "@pipedoc/pandoc",
   "version": "0.0.1",
-  "description": "pipedoc example",
+  "description": "pipedoc pandoc",
   "keywords": [
     "pipedoc",
     "doc",
@@ -33,12 +32,19 @@
     "make": "make --version",
     "prepare": "make -s prepare",
     "purge": "make -s purge",
-    "start": "make -s start",
     "test": "make -s test",
     "test:watch": "make -s test-watch"
   },
   "dependencies": {
-    "core-js": "^3.6.4"
+    "@oclif/command": "^1.5.19",
+    "@oclif/config": "^1.13.3",
+    "@oclif/errors": "^1.2.2",
+    "@oclif/parser": "^3.8.4",
+    "@pipedoc/core": "workspace:^0.0.1",
+    "core-js": "^3.6.4",
+    "execa": "^4.0.0",
+    "globby": "^11.0.0",
+    "pkg-dir": "^4.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -46,10 +52,6 @@
     "@babel/node": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
-    "@pipedoc/cli": "workspace:^0.0.1",
-    "@pipedoc/core": "workspace:^0.0.1",
-    "@pipedoc/pandoc": "workspace:^0.0.1",
-    "@pipedoc/sphinx": "workspace:^0.0.1",
     "@types/jest": "^25.1.1",
     "@types/node": "^13.7.0",
     "@typescript-eslint/eslint-plugin": "^2.19.0",
@@ -68,6 +70,7 @@
   "eslintIgnore": [
     "lib"
   ],
+  "pipedoc": true,
   "jest": {
     "testRegex": "tests(/|/.*/)[^_/]*[jt]sx?$",
     "verbose": true

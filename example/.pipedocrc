@@ -3,4 +3,5 @@ type: markdown
 pipeline:
   - ./docs
   - sphinx
+  - pandoc
   - ./dist/docs
