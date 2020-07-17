@@ -1,7 +1,7 @@
 {
   "name": "pipedoc",
   "description": "documentation pipelines",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "files": [
     "packages"
   ],
@@ -11,7 +11,7 @@
     "clean": "pnpm run exec -- clean",
     "exec": "pnpm recursive --workspace-concurrency=Infinity run --filter={packages}",
     "inc": "npm version patch --git=false 2>/dev/null || true && pnpm run exec -- inc && pnpm install -f",
-    "publish": "npm run inc && npm run build && pnpm -r publish --filter={packages} --access=public",
+    "publish": "npm run build && pnpm -r publish --filter={packages} --access=public",
     "purge": "git clean -fXd",
     "start": "cd example && npm run start",
     "update": "pnpm -r update -L -i"

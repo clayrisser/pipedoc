@@ -1,6 +1,6 @@
 {
   "name": "@pipedoc/cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "pipedoc cli",
   "keywords": [
     "pipedoc",
