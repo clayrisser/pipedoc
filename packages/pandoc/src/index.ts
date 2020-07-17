@@ -1,10 +1,10 @@
-import { Plugin } from '@pipedoc/core';
+import { Plugin } from 'pipedoc';
 import PandocPipe from './pandocPipe';
 
 const plugin: Partial<Plugin> = {
   config: {},
   name: 'pandoc',
-  pipe: PandocPipe,
+  pipe: PandocPipe
 };
 
 export default plugin;

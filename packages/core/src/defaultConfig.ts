@@ -2,7 +2,7 @@ import { Config } from './types';
 
 const config: Partial<Config> = {
   pipeline: [],
-  rootPath: '.',
+  rootPath: '.'
 };
 
 export default config;

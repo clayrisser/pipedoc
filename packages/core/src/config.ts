@@ -27,7 +27,7 @@ export function loadConfig() {
   if (_config) return _config;
   const config = {
     ...defaultConfig,
-    ...getUserConfig(),
+    ...getUserConfig()
   } as Config;
   config.rootPath = path.resolve(rootPath, config.rootPath);
   config.pipeline = config.pipeline.map(

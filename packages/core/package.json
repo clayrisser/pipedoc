@@ -1,6 +1,6 @@
 {
-  "name": "@pipedoc/core",
-  "version": "0.0.2",
+  "name": "pipedoc",
+  "version": "0.0.3",
   "description": "pipedoc core",
   "keywords": [
     "pipedoc",

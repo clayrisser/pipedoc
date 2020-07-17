@@ -60,9 +60,9 @@ test-watch: node_modules/.tmp/eslintReport.json node_modules
 clean:
 	-@jest --clearCache
 ifeq ($(PLATFORM), win32)
-	@$(GIT) clean -fXd -e !/node_modules -e !/node_modules/**/* -e !/yarn.lock -e !/pnpm-lock.yaml -e !/package-lock.json
+	@$(GIT) clean -fXd -e !/packages/*/node_modules -e !/packages/*/node_modules/**/* -e !/packages/*/yarn.lock -e !/packages/*/pnpm-lock.yaml -e !/packages/*/package-lock.json
 else
-	@$(GIT) clean -fXd -e \!/node_modules -e \!/node_modules/**/* -e \!/yarn.lock -e \!/pnpm-lock.yaml -e \!/package-lock.json
+	@$(GIT) clean -fXd -e \!/packages/*/node_modules -e \!/packages/*/node_modules/**/* -e \!/packages/*/yarn.lock -e \!/packages/*/pnpm-lock.yaml -e \!/packages/*/package-lock.json
 endif
 	-@$(RM) -rf node_modules/.cache
 	-@$(RM) -rf node_modules/.make

@@ -1,4 +1,4 @@
-import PipeDoc, { defaultOptions, loadConfig } from '@pipedoc/core';
+import PipeDoc, { defaultOptions, loadConfig } from 'pipedoc';
 import { Command, flags } from '@oclif/command';
 
 export default class Build extends Command {
@@ -10,7 +10,7 @@ export default class Build extends Command {
 
   static flags: flags.Input<any> = {
     config: flags.string({ char: 'c', required: false }),
-    debug: flags.boolean({ char: 'd', required: false })
+    debug: flags.boolean({ char: 'd', required: false }),
   };
 
   async run() {
@@ -19,7 +19,7 @@ export default class Build extends Command {
     const pipeDoc = new PipeDoc(config, {
       ...defaultOptions,
       ...JSON.parse(flags.config || '{}'),
-      debug: !!flags.debug
+      debug: !!flags.debug,
     });
     return pipeDoc.run();
   }

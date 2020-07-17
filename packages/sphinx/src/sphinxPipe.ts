@@ -1,6 +1,6 @@
 // import fs from 'fs-extra';
 import globby from 'globby';
-import { Doc, Options, Pipe } from '@pipedoc/core';
+import { Doc, Options, Pipe } from 'pipedoc';
 
 export interface SphinxPipeConfig {}
 

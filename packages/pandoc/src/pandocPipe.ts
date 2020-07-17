@@ -1,4 +1,4 @@
-import { Doc, Options, Pipe } from '@pipedoc/core';
+import { Doc, Options, Pipe } from 'pipedoc';
 import globby from 'globby';
 
 export interface PandocPipeConfig {}

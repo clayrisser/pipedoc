@@ -1,5 +1,5 @@
 {
-  "name": "@pipedoc/example",
+  "name": "pipedoc-example",
   "private": true,
   "version": "0.0.1",
   "description": "pipedoc example",
@@ -50,10 +50,6 @@
     "@babel/plugin-proposal-optional-chaining": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
     "@babel/preset-typescript": "^7.10.4",
-    "@pipedoc/cli": "workspace:*",
-    "@pipedoc/core": "workspace:*",
-    "@pipedoc/pandoc": "workspace:*",
-    "@pipedoc/sphinx": "workspace:*",
     "@types/jest": "^26.0.4",
     "@types/node": "^14.0.23",
     "@typescript-eslint/eslint-plugin": "^3.6.1",
@@ -69,6 +65,10 @@
     "jest-sonar-reporter": "^2.0.0",
     "lockfile-lint": "^4.3.7",
     "majestic": "^1.7.0",
+    "pipedoc": "workspace:*",
+    "pipedoc-cli": "workspace:*",
+    "pipedoc-pandoc": "workspace:*",
+    "pipedoc-sphinx": "workspace:*",
     "prettier": "^2.0.5",
     "typescript": "^3.9.7"
   },
