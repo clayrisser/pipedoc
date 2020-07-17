@@ -18,7 +18,7 @@ export function getPlugins(rootPath: string): Plugins {
     // eslint-disable-next-line global-require,import/no-dynamic-require
     ...require(path.resolve(rootPath, 'package.json')).dependencies,
     // eslint-disable-next-line global-require,import/no-dynamic-require
-    ...require(path.resolve(rootPath, 'package.json')).devDependencies
+    ...require(path.resolve(rootPath, 'package.json')).devDependencies,
   });
   _plugins = dependencyNames
     .filter((dependencyName: string) => {
@@ -49,7 +49,7 @@ export function getPlugins(rootPath: string): Plugins {
         moduleName,
         name: requiredPlugin.name || moduleName,
         path: pluginPath,
-        pipe: requiredPlugin.pipe
+        pipe: requiredPlugin.pipe,
       };
       plugins[plugin.name] = plugin;
       return plugins;

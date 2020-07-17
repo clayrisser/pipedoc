@@ -30,7 +30,7 @@ export default class PipeDoc {
           return paths;
         },
         {}
-      ) as unknown) as Paths)
+      ) as unknown) as Paths),
     };
     this.options = options;
   }
@@ -67,8 +67,8 @@ export default class PipeDoc {
             ...this.options,
             paths: {
               ...this.options.paths,
-              tmp: path.resolve(this.options.paths.tmp, plugin.name)
-            }
+              tmp: path.resolve(this.options.paths.tmp, plugin.name),
+            },
           },
           parentPath,
           parent

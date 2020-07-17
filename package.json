@@ -7,15 +7,17 @@
   ],
   "scripts": {
     "bootstrap": "pnpm install",
-    "build": "npm run exec -- build",
-    "clean": "npm run exec -- clean",
+    "build": "pnpm run exec -- build",
+    "clean": "pnpm run exec -- clean",
     "exec": "pnpm recursive --workspace-concurrency=Infinity run --filter={packages}",
-    "publish": "pnpm -r publish --filter={packages} --access=public",
+    "inc": "npm version patch --git=false 2>/dev/null || true && pnpm run exec -- inc && pnpm install -f",
+    "publish": "npm run inc && npm run build && pnpm -r publish --filter={packages} --access=public",
     "purge": "git clean -fXd",
-    "update": "pnpm -r update -L"
+    "start": "cd example && npm run start",
+    "update": "pnpm -r update -L -i"
   },
   "license": "MIT",
   "devDependencies": {
-    "pnpm": "^4.9.2"
+    "pnpm": "^5.4.0"
   }
 }
