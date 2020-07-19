@@ -17,12 +17,16 @@ export type PipelineItem =
       name: string;
     };
 
-export interface Plugin {
-  config: PluginConfig;
+export interface Plugin<Config = PipeConfig> {
+  config: Config;
   moduleName: string;
   name: string;
   path: string;
-  pipe: typeof Pipe;
+  pipe: new (
+    config: Config,
+    options: Options,
+    parent: Pipe<Config> | null
+  ) => Pipe<Config>;
 }
 
 export interface Plugins {

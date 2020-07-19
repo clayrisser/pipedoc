@@ -1,7 +1,7 @@
 {
-  "name": "pipedoc-pandoc",
+  "name": "pipedoc-example",
   "version": "0.0.5",
-  "description": "pipedoc pandoc",
+  "description": "pipedoc example",
   "keywords": [
     "pipedoc",
     "doc",

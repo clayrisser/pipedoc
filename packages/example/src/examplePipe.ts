@@ -3,11 +3,11 @@ import globby from 'globby';
 import path from 'path';
 import { Doc, Options, Pipe } from 'pipedoc';
 
-export interface PandocPipeConfig {}
+export interface ExamplePipeConfig {}
 
-export default class PandocPipe extends Pipe<PandocPipeConfig> {
+export default class ExamplePipe extends Pipe<ExamplePipeConfig> {
   constructor(
-    config: PandocPipeConfig = {},
+    config: ExamplePipeConfig = {},
     options: Options,
     parent: Pipe | null
   ) {

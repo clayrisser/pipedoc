@@ -7,14 +7,13 @@ export interface CopyPipeConfig extends PipeConfig {
   to: string;
 }
 
-export default class CopyPipe extends Pipe {
+export default class CopyPipe extends Pipe<CopyPipeConfig> {
   constructor(
-    public config: CopyPipeConfig,
-    public options = defaultOptions,
-    public parentPath: string,
-    public parent: Pipe | null
+    config: CopyPipeConfig,
+    options = defaultOptions,
+    parent: Pipe<CopyPipeConfig> | null
   ) {
-    super({}, options, parentPath, parent);
+    super(config, options, parent);
   }
 
   async pipe(doc: Doc): Promise<Doc> {

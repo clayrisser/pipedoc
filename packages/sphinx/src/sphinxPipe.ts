@@ -1,23 +1,27 @@
-// import fs from 'fs-extra';
+import fs from 'fs-extra';
 import globby from 'globby';
+import path from 'path';
 import { Doc, Options, Pipe } from 'pipedoc';
 
 export interface SphinxPipeConfig {}
 
-export default class SphinxPipe extends Pipe {
+export default class SphinxPipe extends Pipe<SphinxPipeConfig> {
   constructor(
-    public config: SphinxPipeConfig = {},
+    config: SphinxPipeConfig = {},
     options: Options,
-    parentPath: string,
     parent: Pipe | null
   ) {
-    super({}, options, parentPath, parent);
+    super(config, options, parent);
   }
 
   async pipe(doc: Doc): Promise<Doc> {
-    console.log(this.parentPath);
-    const files = await globby(`${this.parentPath}/${doc.glob}`);
-    console.log('files', files);
+    const filePaths = await globby(`${doc.rootPath}/${doc.glob}`);
+    await Promise.all(
+      filePaths.map(async (filePath: string) => {
+        const fileName = filePath.substr(doc.rootPath.length + 1);
+        await fs.copyFile(filePath, path.resolve(this.paths.tmp, fileName));
+      })
+    );
     return doc;
   }
 }
