@@ -5,8 +5,7 @@ import { Paths } from './types';
 export interface PipeConfig {}
 
 export default abstract class Pipe<Config = PipeConfig> {
-  abstract acceptedTypes?: Set<string>;
-  abstract toType?: string;
+  abstract ignoreGlobs?: string[];
   debug: boolean;
   paths: Paths;
 
@@ -19,7 +18,7 @@ export default abstract class Pipe<Config = PipeConfig> {
     this.paths = options.paths;
   }
 
-  async pipe(doc: Doc): Promise<Doc> {
-    return doc;
+  async pipe(_doc: Doc): Promise<string[]> {
+    return [];
   }
 }

@@ -1,7 +1,5 @@
 export default class Doc {
-  constructor(
-    public rootPath: string,
-    public type: string,
-    public glob = '**/*'
-  ) {}
+  public convertedFilePaths?: string[];
+
+  constructor(public rootPath: string, public glob = '**/*') {}
 }

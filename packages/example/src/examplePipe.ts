@@ -6,8 +6,7 @@ import { Doc, Options, Pipe } from 'pipedoc';
 export interface ExamplePipeConfig {}
 
 export default class ExamplePipe extends Pipe<ExamplePipeConfig> {
-  acceptedTypes?: Set<string>;
-  toType?: string;
+  ignoreGlobs?: string[];
 
   constructor(
     config: ExamplePipeConfig = {},
@@ -17,7 +16,7 @@ export default class ExamplePipe extends Pipe<ExamplePipeConfig> {
     super(config, options, parent);
   }
 
-  async pipe(doc: Doc): Promise<Doc> {
+  async pipe(doc: Doc): Promise<string[]> {
     const filePaths = await globby(`${doc.rootPath}/${doc.glob}`);
     await Promise.all(
       filePaths.map(async (filePath: string) => {
@@ -25,6 +24,6 @@ export default class ExamplePipe extends Pipe<ExamplePipeConfig> {
         await fs.copyFile(filePath, path.resolve(this.paths.tmp, fileName));
       })
     );
-    return doc;
+    return filePaths;
   }
 }

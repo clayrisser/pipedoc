@@ -1,17 +1,15 @@
-- type: md
-  pipeline:
+- pipeline:
     - ./docs
     - sphinx
     - name: pandoc
       config:
-        format: pdf
+        to: pdf
     - ./dist/docs/pdf
 
-- type: md
-  pipeline:
+- pipeline:
     - ./docs
     - sphinx
     - name: pandoc
       config:
-        format: md
+        to: md
     - ./dist/docs/md

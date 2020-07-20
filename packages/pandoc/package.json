@@ -1,6 +1,6 @@
 {
   "name": "pipedoc-pandoc",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "pipedoc pandoc",
   "keywords": [
     "pipedoc",

@@ -4,12 +4,12 @@ import path from 'path';
 import { Doc, Options, Pipe } from 'pipedoc';
 
 export interface PandocPipeConfig {
-  format: string;
+  to: string;
+  glob?: string;
 }
 
 export default class PandocPipe extends Pipe<PandocPipeConfig> {
-  acceptedTypes = new Set(['md', 'pdf', 'rst', 'html', 'doc', 'docx', 'rtf']);
-  toType?: string;
+  ignoreGlobs?: string[];
 
   constructor(
     config: PandocPipeConfig,
@@ -17,25 +17,26 @@ export default class PandocPipe extends Pipe<PandocPipeConfig> {
     parent: Pipe<PandocPipeConfig> | null
   ) {
     super(config, options, parent);
-    this.toType = config.format;
   }
 
-  async pipe(doc: Doc): Promise<Doc> {
-    const filePaths = await globby(`${doc.rootPath}/${doc.glob}.${doc.type}`);
+  async pipe(doc: Doc): Promise<string[]> {
+    const filePaths = await globby(
+      `${doc.rootPath}/${this.config.glob || doc.glob}`
+    );
     await Promise.all(
       filePaths.map(async (filePath: string) => {
         const filePathParts = filePath
           .substr(doc.rootPath.length + 1)
           .split('.');
         filePathParts.pop();
-        const fileName = [...filePathParts, this.config.format].join('.');
+        const fileName = [...filePathParts, this.config.to].join('.');
         await this.convertFile(
           filePath,
           path.resolve(this.paths.tmp, fileName)
         );
       })
     );
-    return doc;
+    return filePaths;
   }
 
   async convertFile(

@@ -1,6 +1,6 @@
 {
   "name": "pipedoc",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "pipedoc core",
   "keywords": [
     "pipedoc",
@@ -45,7 +45,6 @@
     "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
     "globby": "^11.0.1",
-    "lodash": "^4.17.19",
     "merge-configuration": "^0.5.4",
     "pkg-dir": "^4.2.0"
   },
@@ -60,7 +59,6 @@
     "@babel/preset-typescript": "^7.10.4",
     "@types/fs-extra": "^9.0.1",
     "@types/jest": "^26.0.4",
-    "@types/lodash": "^4.14.157",
     "@types/node": "^14.0.23",
     "@typescript-eslint/eslint-plugin": "^3.6.1",
     "@typescript-eslint/parser": "^3.6.1",

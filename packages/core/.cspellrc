@@ -3,6 +3,7 @@
   "version": "0.1",
   "words": [
     "execa",
+    "globby",
     "mkdirs",
     "whereis"
   ]
