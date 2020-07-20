@@ -8,6 +8,9 @@ export interface CopyPipeConfig extends PipeConfig {
 }
 
 export default class CopyPipe extends Pipe<CopyPipeConfig> {
+  acceptedTypes?: Set<string>;
+  toType?: string;
+
   constructor(
     config: CopyPipeConfig,
     options = defaultOptions,

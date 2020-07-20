@@ -6,6 +6,9 @@ import { Doc, Options, Pipe } from 'pipedoc';
 export interface ExamplePipeConfig {}
 
 export default class ExamplePipe extends Pipe<ExamplePipeConfig> {
+  acceptedTypes?: Set<string>;
+  toType?: string;
+
   constructor(
     config: ExamplePipeConfig = {},
     options: Options,

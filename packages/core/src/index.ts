@@ -1,6 +1,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 import pkgDir from 'pkg-dir';
+import snakeCase from 'lodash/snakeCase';
 import Doc from './doc';
 import Pipe from './pipe';
 import defaultConfig from './defaultConfig';
@@ -16,14 +17,25 @@ const rootPath = pkgDir.sync(process.cwd()) || process.cwd();
 export default class PipeDoc {
   options: Options;
 
+  configs: Config[] = [];
+
   constructor(
-    public config: Config = defaultConfig as Config,
+    config: Config | Config[] = defaultConfig as Config,
     options: Options = defaultOptions
   ) {
-    this.config = {
-      ...defaultConfig,
-      ...this.config
-    };
+    if (Array.isArray(config)) {
+      this.configs = config.map((config: Config) => {
+        return {
+          ...defaultConfig,
+          ...config
+        };
+      });
+    } else {
+      this.configs.push({
+        ...defaultConfig,
+        ...config
+      });
+    }
     options = {
       ...defaultOptions,
       ...options,
@@ -47,53 +59,63 @@ export default class PipeDoc {
     this.options = options;
   }
 
-  async run(): Promise<Doc | null> {
+  async run(): Promise<Doc[]> {
+    return (
+      await mapSeries(this.configs, async (config: Config) => {
+        return this.runPipeline(config);
+      })
+    ).filter((doc: Doc | void) => typeof doc !== 'undefined') as Doc[];
+  }
+
+  async runPipeline(config: Config): Promise<Doc | void> {
     if (
-      this.config.pipeline.length < 2 ||
-      typeof this.config.pipeline[0] !== 'string' ||
-      typeof this.config.pipeline[this.config.pipeline.length - 1] !== 'string'
+      config.pipeline.length < 2 ||
+      typeof config.pipeline[0] !== 'string' ||
+      typeof config.pipeline[config.pipeline.length - 1] !== 'string'
     ) {
-      return null;
+      return;
     }
     await fs.mkdirs(this.options.paths.tmp);
-    let previousName = this.config.pipeline.shift() as string;
+    let previousName = config.pipeline.shift() as string;
     const parent: Pipe | null = null;
-    let doc = new Doc(
-      path.resolve(this.config.rootPath, previousName),
-      this.config.type
-    );
-    const to = this.config.pipeline.pop() as string;
-    await mapSeries(
-      this.config.pipeline,
-      async (pipelineItem: PipelineItem) => {
-        const plugin = getPlugin(
-          typeof pipelineItem === 'string' ? pipelineItem : pipelineItem.name,
-          typeof pipelineItem === 'string' ? {} : pipelineItem.config
-        );
-        if (!plugin?.pipe) return doc;
-        const PluginPipe = plugin.pipe;
-        const pipe = new PluginPipe(
-          plugin.config,
-          {
-            ...this.options,
-            paths: {
-              ...this.options.paths,
-              tmp: path.resolve(this.options.paths.tmp, plugin.name)
-            }
-          },
-          parent
-        );
-        logger.info(`${previousName} -> ${plugin?.name}`);
-        await fs.remove(pipe.paths.tmp);
-        await fs.mkdirs(pipe.paths.tmp);
-        doc = await pipe.pipe(doc);
-        doc.rootPath = pipe.paths.tmp;
-        previousName = plugin.name;
-        return doc;
+    let doc = new Doc(path.resolve(config.rootPath, previousName), config.type);
+    const to = config.pipeline.pop() as string;
+    await mapSeries(config.pipeline, async (pipelineItem: PipelineItem) => {
+      const plugin = getPlugin(
+        typeof pipelineItem === 'string' ? pipelineItem : pipelineItem.name,
+        typeof pipelineItem === 'string' ? {} : pipelineItem.config
+      );
+      if (!plugin?.pipe) return doc;
+      const PluginPipe = plugin.pipe;
+      const pipe = new PluginPipe(
+        plugin.config,
+        {
+          ...this.options,
+          paths: {
+            ...this.options.paths,
+            tmp: path.resolve(this.options.paths.tmp, plugin.name)
+          }
+        },
+        parent
+      );
+      if (pipe.acceptedTypes && !pipe.acceptedTypes?.has(doc.type)) {
+        throw new Error(`${snakeCase(pipe.constructor.name).replace(
+          /_/g,
+          ' '
+        )} does not accept type ${doc.type}
+try one of the following types ${[...pipe.acceptedTypes].join(', ')}`);
       }
-    );
+      logger.info(`${previousName} -> ${plugin?.name}`);
+      await fs.remove(pipe.paths.tmp);
+      await fs.mkdirs(pipe.paths.tmp);
+      doc = await pipe.pipe(doc);
+      doc.rootPath = pipe.paths.tmp;
+      if (pipe.toType) doc.type = pipe.toType;
+      previousName = plugin.name;
+      return doc;
+    });
     const copyPipe = new CopyPipe({ to }, this.options, parent);
-    logger.info(`${previousName} -> ${to}`);
+    logger.info(`${previousName} -> ${to}\n`);
     return copyPipe.pipe(doc);
   }
 }

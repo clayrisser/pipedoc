@@ -1,3 +1,4 @@
+import merge from 'merge-configuration';
 import path from 'path';
 import pkgDir from 'pkg-dir';
 import { Plugin, Plugins, PluginConfig } from './types';
@@ -64,6 +65,6 @@ export function getPlugin(
   const plugins = getPlugins(rootPath);
   const plugin = plugins[pluginName];
   if (!plugin) return null;
-  plugin.config = pluginConfig;
+  plugin.config = merge(plugin.config, pluginConfig);
   return plugin;
 }

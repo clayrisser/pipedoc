@@ -4,7 +4,9 @@ import { Paths } from './types';
 
 export interface PipeConfig {}
 
-export default class Pipe<Config = PipeConfig> {
+export default abstract class Pipe<Config = PipeConfig> {
+  abstract acceptedTypes?: Set<string>;
+  abstract toType?: string;
   debug: boolean;
   paths: Paths;
 

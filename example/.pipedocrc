@@ -1,9 +1,17 @@
-type: markdown
+- type: md
+  pipeline:
+    - ./docs
+    - sphinx
+    - name: pandoc
+      config:
+        format: pdf
+    - ./dist/docs/pdf
 
-pipeline:
-  - ./docs
-  - sphinx
-  - name: pandoc
-    config:
-      output: markdown
-  - ./dist/docs
+- type: md
+  pipeline:
+    - ./docs
+    - sphinx
+    - name: pandoc
+      config:
+        format: md
+    - ./dist/docs/md

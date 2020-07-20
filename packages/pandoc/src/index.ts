@@ -2,7 +2,7 @@ import { Plugin } from 'pipedoc';
 import PandocPipe, { PandocPipeConfig } from './pandocPipe';
 
 const plugin: Partial<Plugin<PandocPipeConfig>> = {
-  config: {},
+  config: { format: 'md' },
   name: 'pandoc',
   pipe: PandocPipe
 };

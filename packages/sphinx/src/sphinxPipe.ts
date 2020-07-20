@@ -6,6 +6,9 @@ import { Doc, Options, Pipe } from 'pipedoc';
 export interface SphinxPipeConfig {}
 
 export default class SphinxPipe extends Pipe<SphinxPipeConfig> {
+  acceptedTypes?: Set<string>;
+  toType?: string;
+
   constructor(
     config: SphinxPipeConfig = {},
     options: Options,
