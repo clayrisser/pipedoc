@@ -159,7 +159,15 @@ export default class PipeDoc {
     await Promise.all(
       [...unconvertedFilePaths].map(async (filePath: string) => {
         const fileName = filePath.substr(doc.rootPath.length + 1);
-        await fs.copyFile(filePath, path.resolve(pipe.paths.tmp, fileName));
+        try {
+          console.log('FROM', filePath, path.resolve(pipe.paths.tmp, fileName));
+          await fs.mkdirp(
+            path.resolve(pipe.paths.tmp, fileName).replace(/[^\/]+$/g, '')
+          );
+          await fs.copyFile(filePath, path.resolve(pipe.paths.tmp, fileName));
+        } catch (err) {
+          console.error(err);
+        }
       })
     );
     return doc;

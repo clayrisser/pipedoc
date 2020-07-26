@@ -1,15 +1,20 @@
 - pipeline:
     - ./docs
-    - sphinx
     - name: pandoc
       config:
+        glob: '**/*.md'
         to: pdf
     - ./dist/docs/pdf
 
 - pipeline:
     - ./docs
-    - sphinx
     - name: pandoc
       config:
+        glob: '**/*.md'
         to: md
     - ./dist/docs/md
+
+- pipeline:
+    - ./docs
+    - sphinx
+    - ./dist/docs/html

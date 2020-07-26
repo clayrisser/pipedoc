@@ -2,10 +2,9 @@ from sphinx_markdown_parser.parser import MarkdownParser
 
 author = 'Jam Risser'
 description = ''
-extensions = []
 html_static_path = ['_static']
 html_theme = 'sphinx_rtd_theme'
-js_source_path = '../src'
+js_source_path = '../../../../src'
 language = None
 master_doc = 'index'
 needs_sphinx = '1.0'
@@ -13,11 +12,14 @@ primary_domain = 'js'
 project = 'pipedoc-example'
 pygments_style = 'sphinx'
 release = '0.0.6'
-source_suffix = ['.rst', '.md']
 templates_path = ['_templates']
 todo_include_todos = False
 copyright = '2020, '+author
 htmlhelp_basename = project+'doc'
+extensions = [
+  'sphinx.ext.mathjax',
+  'sphinx_js'
+]
 latex_documents = [(
   master_doc,
   project+'.tex',
@@ -39,9 +41,8 @@ man_pages = [(
   1
 )]
 exclude_patterns = [
-  'dist/*',
-  'sphinx.ext.mathjax',
-  'sphinx_js'
+  'dist/**/*',
+  'env/**/*'
 ]
 texinfo_documents = [(
     master_doc,
@@ -64,10 +65,10 @@ def setup(app):
         'extensions': [
             'extra',
             'nl2br',
+            'pymdownx.arithmatex',
             'sane_lists',
             'smarty',
             'toc',
-            'wikilinks',
-            'pymdownx.arithmatex',
+            'wikilinks'
         ],
     }, True)
