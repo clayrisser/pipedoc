@@ -14,6 +14,7 @@ export default abstract class Pipe<Config = PipeConfig> {
     options = defaultOptions,
     public parent: Pipe<Config> | null = null
   ) {
+    options = { ...options };
     this.debug = options.debug;
     this.paths = options.paths;
   }

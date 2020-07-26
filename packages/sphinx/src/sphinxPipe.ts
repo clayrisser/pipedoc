@@ -34,8 +34,10 @@ export default class SphinxPipe extends Pipe<SphinxPipeConfig> {
   }
 
   async setup(doc: Doc) {
-    await this.createVirtualenv(doc);
-    await this.installRequirements(doc);
+    if (!(await fs.pathExists(path.resolve(doc.rootPath, 'env')))) {
+      await this.createVirtualenv(doc);
+      await this.installRequirements(doc);
+    }
   }
 
   async pipe(doc: Doc): Promise<string[]> {

@@ -84,6 +84,14 @@ export default class PipeDoc {
     const parent: Pipe | null = null;
     let doc = new Doc(path.resolve(config.rootPath, previousName));
     const to = config.pipeline.pop() as string;
+    const genesisPath = path.resolve(this.options.paths.tmp, 'copy');
+    const genesisCopyPipe = new CopyPipe(
+      { to: genesisPath },
+      this.options,
+      parent
+    );
+    await genesisCopyPipe.pipe(doc);
+    doc.rootPath = genesisPath;
     await mapSeries(config.pipeline, async (pipelineItem: PipelineItem) => {
       const plugin = getPlugin(
         typeof pipelineItem === 'string' ? pipelineItem : pipelineItem.name,
@@ -102,9 +110,9 @@ export default class PipeDoc {
       previousName = plugin.name;
       return result;
     });
-    const copyPipe = new CopyPipe({ to }, this.options, parent);
+    const finishCopyPipe = new CopyPipe({ to }, this.options, parent);
     logger.info(`${previousName} -> ${to}\n`);
-    return copyPipe.pipe(doc);
+    return finishCopyPipe.pipe(doc);
   }
 
   createPipe(plugin: Plugin<PipeConfig>, parent: Pipe | null): Pipe | void {
