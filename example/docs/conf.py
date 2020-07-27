@@ -1,8 +1,10 @@
 # from sphinx_markdown_parser.parser import MarkdownParser
+from recommonmark.transform import AutoStructify
 
 author = 'Jam Risser'
 copyright = '2020, '+author
 description = ''
+doc_root = 'https://github.com/rtfd/recommonmark/tree/master/doc/'
 html_static_path = ['_static']
 html_theme = 'sphinx_rtd_theme'
 project = 'pipedoc-example'
@@ -59,18 +61,22 @@ texinfo_documents = [(
 def setup(app):
     # app.add_source_parser(MarkdownParser)
     # app.add_source_suffix('.md', 'markdown')
-    app.add_config_value('markdown_parser_config', {
+    # app.add_config_value('markdown_parser_config', {
+    app.add_config_value('recommonmark_config', {
         'auto_toc_tree_section': 'Content',
+        'auto_toc_tree_section': 'Contents',
         'enable_auto_doc_ref': True,
         'enable_auto_toc_tree': True,
         'enable_eval_rst': True,
-        'extensions': [
-            'extra',
-            'nl2br',
-            'pymdownx.arithmatex',
-            'sane_lists',
-            'smarty',
-            'toc',
-            'wikilinks'
-        ],
+        'url_resolver': lambda url: doc_root + url,
+        # 'extensions': [
+        #     'extra',
+        #     'nl2br',
+        #     'pymdownx.arithmatex',
+        #     'sane_lists',
+        #     'smarty',
+        #     'toc',
+        #     'wikilinks'
+        # ],
     }, True)
+    app.add_transform(AutoStructify)
