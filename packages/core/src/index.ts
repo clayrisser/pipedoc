@@ -1,5 +1,6 @@
 import fs from 'fs-extra';
 import globby from 'globby';
+import highwayhash from 'highwayhash';
 import path from 'path';
 import pkgDir from 'pkg-dir';
 import Doc from './doc';
@@ -14,6 +15,11 @@ import { mapSeries } from './helpers';
 
 const logger = console;
 const rootPath = pkgDir.sync(process.cwd()) || process.cwd();
+const hashKeyBuffer = Buffer.from(
+  Array.apply(null, new Array(32)).map(
+    (_item: any, i: number) => process.cwd().charCodeAt(i) || 0
+  )
+);
 
 export default class PipeDoc {
   options: Options;
@@ -79,12 +85,17 @@ export default class PipeDoc {
     ) {
       return;
     }
-    await fs.mkdirs(this.options.paths.tmp);
+    const hash = highwayhash.asHexString(
+      hashKeyBuffer,
+      Buffer.from(JSON.stringify(config))
+    );
+    const tmpPath = path.resolve(this.options.paths.tmp, hash);
+    await fs.mkdirs(tmpPath);
     let previousName = config.pipeline.shift() as string;
     const parent: Pipe | null = null;
     let doc = new Doc(path.resolve(config.rootPath, previousName));
     const to = config.pipeline.pop() as string;
-    const genesisPath = path.resolve(this.options.paths.tmp, 'copy');
+    const genesisPath = path.resolve(tmpPath, 'copy');
     const genesisCopyPipe = new CopyPipe(
       { to: genesisPath },
       this.options,
@@ -98,7 +109,7 @@ export default class PipeDoc {
         typeof pipelineItem === 'string' ? {} : pipelineItem.config
       );
       if (!plugin) return;
-      const pipe = this.createPipe(plugin, parent);
+      const pipe = this.createPipe(plugin, parent, tmpPath);
       if (!pipe) return;
       const result = await this.runPipelineItem(
         previousName,
@@ -115,7 +126,11 @@ export default class PipeDoc {
     return finishCopyPipe.pipe(doc);
   }
 
-  createPipe(plugin: Plugin<PipeConfig>, parent: Pipe | null): Pipe | void {
+  createPipe(
+    plugin: Plugin<PipeConfig>,
+    parent: Pipe | null,
+    tmpPath: string
+  ): Pipe | void {
     if (!plugin.pipe) return;
     const PluginPipe = plugin.pipe;
     return new PluginPipe(
@@ -124,7 +139,7 @@ export default class PipeDoc {
         ...this.options,
         paths: {
           ...this.options.paths,
-          tmp: path.resolve(this.options.paths.tmp, plugin.name)
+          tmp: path.resolve(tmpPath, plugin.name)
         }
       },
       parent
@@ -160,7 +175,6 @@ export default class PipeDoc {
       [...unconvertedFilePaths].map(async (filePath: string) => {
         const fileName = filePath.substr(doc.rootPath.length + 1);
         try {
-          console.log('FROM', filePath, path.resolve(pipe.paths.tmp, fileName));
           await fs.mkdirp(
             path.resolve(pipe.paths.tmp, fileName).replace(/[^\/]+$/g, '')
           );

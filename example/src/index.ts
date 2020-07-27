@@ -1,1 +1,1 @@
-export default class Example {}
+export default class Hello {}

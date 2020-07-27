@@ -1,6 +1,6 @@
 {
   "name": "pipedoc",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "pipedoc core",
   "keywords": [
     "pipedoc",
@@ -45,6 +45,7 @@
     "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
     "globby": "^11.0.1",
+    "highwayhash": "^3.0.0",
     "merge-configuration": "^0.5.4",
     "pkg-dir": "^4.2.0"
   },

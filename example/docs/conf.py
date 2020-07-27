@@ -1,48 +1,50 @@
-from sphinx_markdown_parser.parser import MarkdownParser
+# from sphinx_markdown_parser.parser import MarkdownParser
 
 author = 'Jam Risser'
+copyright = '2020, '+author
 description = ''
 html_static_path = ['_static']
 html_theme = 'sphinx_rtd_theme'
-js_source_path = '../../../../src'
+project = 'pipedoc-example'
+htmlhelp_basename = project+'doc'
+js_language = 'typescript'
+js_source_paths = ['../../../../src']
 language = None
 master_doc = 'index'
 needs_sphinx = '1.0'
 primary_domain = 'js'
-project = 'pipedoc-example'
 pygments_style = 'sphinx'
 release = '0.0.6'
 templates_path = ['_templates']
 todo_include_todos = False
-copyright = '2020, '+author
-htmlhelp_basename = project+'doc'
 extensions = [
-  'sphinx.ext.mathjax',
-  'sphinx_js'
+    'recommonmark',
+    'sphinx.ext.mathjax',
+    'sphinx_js'
 ]
 latex_documents = [(
-  master_doc,
-  project+'.tex',
-  project+' documentation',
-  author,
-  'manual'
+    master_doc,
+    project+'.tex',
+    project+' documentation',
+    author,
+    'manual'
 )]
 latex_elements = {
-  'papersize': 'letterpaper',
-  'pointsize': '10pt',
-  'preamble': '',
-  'figure_align': 'htbp'
+    'papersize': 'letterpaper',
+    'pointsize': '10pt',
+    'preamble': '',
+    'figure_align': 'htbp'
 }
 man_pages = [(
-  master_doc,
-  project,
-  project+' documentation',
-  [author],
-  1
+    master_doc,
+    project,
+    project+' documentation',
+    [author],
+    1
 )]
 exclude_patterns = [
-  'dist/**/*',
-  'env/**/*'
+    'dist/**/*',
+    'env/**/*'
 ]
 texinfo_documents = [(
     master_doc,
@@ -55,8 +57,8 @@ texinfo_documents = [(
 )]
 
 def setup(app):
-    app.add_source_suffix('.md', 'markdown')
-    app.add_source_parser(MarkdownParser)
+    # app.add_source_parser(MarkdownParser)
+    # app.add_source_suffix('.md', 'markdown')
     app.add_config_value('markdown_parser_config', {
         'auto_toc_tree_section': 'Content',
         'enable_auto_doc_ref': True,
